@@ -1,16 +1,64 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { WrapperForm } from "./styled-components"
 import image from "../assets/images/logo.png"
+import { useState } from "react";
+import axios from "axios";
 
 export default function Register() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [url, setUrl] = useState("");
+    const navigate = useNavigate();
+
+    function registerApi(e) {
+        e.preventDefault();
+
+        const objPost = {
+            email: email,
+            name: name,
+            image: url,
+            password: password
+        };
+
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", objPost);
+
+        promise.then(() => navigate("/"));
+        promise.catch((response) => alert(response.data.message));
+    }
+    
     return (
         <WrapperForm>
             <img src={image} alt="Logo"/>
-            <form>
-                <input placeholder="email"></input>
-                <input placeholder="senha"></input>
-                <input placeholder="nome"></input>
-                <input placeholder="foto"></input>
+            <form onSubmit={registerApi}>
+                <input
+                     placeholder="email"
+                     type="email"
+                     onChange={(e) => setEmail(e.target.value)}
+                     value={email}
+                     required
+                     ></input>
+                <input
+                     placeholder="senha"
+                     type="password"
+                     onChange={(e) => setPassword(e.target.value)}
+                     value={password}
+                     required
+                     ></input>
+                <input
+                     placeholder="nome"
+                     type="text"
+                     onChange={(e) => setName(e.target.value)}
+                     value={name}
+                     required
+                     ></input>
+                <input
+                     placeholder="foto"
+                     type="url"
+                     onChange={(e) => setUrl(e.target.value)}
+                     value={url}
+                     required
+                     ></input>
                 <button>Cadastrar</button>
             </form>
             <Link to="/">Já tem uma conta? Faça login!</Link>
