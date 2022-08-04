@@ -4,7 +4,6 @@ import LoginContext from "./contexts/LoginContext";
 
 export default function Header() {
     const {login} = useContext(LoginContext);
-    console.log(login)
 
     return (
         <HeaderBox>
@@ -26,6 +25,7 @@ const HeaderBox = styled.div`
     position: fixed;
     top: 0px;
     left: 0px;
+    z-index: 1;
 
     & h1 {
         font-family: 'Playball', cursive;

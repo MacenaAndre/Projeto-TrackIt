@@ -37,29 +37,30 @@ export default function Login() {
     }
 
     return (
-        <WrapperForm>
-            <img src={image} alt="Logo"/>
-            <form onSubmit={loginAPI}>
-                <input
-                     placeholder="email"
-                     type="email"
-                     onChange={(e) => setEmailLogin(e.target.value)}
-                     value={emailLogin}
-                     disabled={buttonLogin}
-                     required
-                     ></input>
-                <input
-                     placeholder="senha"
-                     type="password"
-                     onChange={(e) => setPasswordLogin(e.target.value)}
-                     value={passwordLogin}
-                     disabled={buttonLogin}
-                     required
-                     ></input>
-                {!buttonLogin ? <button>Entrar</button> : <button disabled={buttonLogin}><ThreeDots color="#FFFFFF" width={60} height={60}/></button> }
-            </form>
-            <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
-        </WrapperForm>
+            <WrapperForm>
+                <img src={image} alt="Logo"/>
+                <form onSubmit={loginAPI}>
+                    <input
+                        placeholder="email"
+                        type="email"
+                        onChange={(e) => setEmailLogin(e.target.value)}
+                        value={emailLogin}
+                        disabled={buttonLogin}
+                        required
+                        ></input>
+                    <input
+                        placeholder="senha"
+                        type="password"
+                        onChange={(e) => setPasswordLogin(e.target.value)}
+                        value={passwordLogin}
+                        disabled={buttonLogin}
+                        required
+                        ></input>
+                    {!buttonLogin ? <button>Entrar</button> : <button disabled={buttonLogin}><ThreeDots color="#FFFFFF" width={60} height={60}/></button> }
+                </form>
+                <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
+            </WrapperForm>
     );
 }
+
 

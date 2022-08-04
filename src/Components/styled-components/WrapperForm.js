@@ -13,11 +13,13 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: 100vh;
 
     & img {
         width: 50%;
+        max-width: 180px;
         height: 50%;
+        max-height: 180px;
         margin-top: 68px;
     }
     input {
