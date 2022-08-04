@@ -38,9 +38,14 @@ const Wrapper = styled.div`
         font-weight: 400;
         line-height: 25px;
     }
+    input:disabled {
+        background-color: #F2F2F2;
+        color: #D4D4D4;
+        border: 1px solid #D4D4D4;
+    }
     button {
         height: 45px;
-        width: 81%;
+        width: 75%;
         border-radius: 5px;
         background-color: #52B6FF;
         box-shadow: none;
@@ -53,6 +58,12 @@ const Wrapper = styled.div`
         color: #FFFFFF;
         margin-top: 4px;
         margin-bottom: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    button:disabled {
+        opacity: 0.7;
     }
     a {
         color: #52B6FF;

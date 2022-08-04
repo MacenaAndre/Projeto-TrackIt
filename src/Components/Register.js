@@ -3,12 +3,14 @@ import { WrapperForm } from "./styled-components"
 import image from "../assets/images/logo.png"
 import { useState } from "react";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner"; 
 
 export default function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [url, setUrl] = useState("");
+    const [button, setButton] = useState(false);
     const navigate = useNavigate();
 
     function registerApi(e) {
@@ -24,9 +26,14 @@ export default function Register() {
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", objPost);
 
         promise.then(() => navigate("/"));
-        promise.catch((response) => alert(response.data.message));
+        promise.catch((response) => {
+            setButton(false)
+            alert(response.response.data.message)
+        });
+
+        setButton(!button);
     }
-    
+
     return (
         <WrapperForm>
             <img src={image} alt="Logo"/>
@@ -36,6 +43,7 @@ export default function Register() {
                      type="email"
                      onChange={(e) => setEmail(e.target.value)}
                      value={email}
+                     disabled={button}
                      required
                      ></input>
                 <input
@@ -43,6 +51,7 @@ export default function Register() {
                      type="password"
                      onChange={(e) => setPassword(e.target.value)}
                      value={password}
+                     disabled={button}
                      required
                      ></input>
                 <input
@@ -50,6 +59,7 @@ export default function Register() {
                      type="text"
                      onChange={(e) => setName(e.target.value)}
                      value={name}
+                     disabled={button}
                      required
                      ></input>
                 <input
@@ -57,9 +67,10 @@ export default function Register() {
                      type="url"
                      onChange={(e) => setUrl(e.target.value)}
                      value={url}
+                     disabled={button}
                      required
                      ></input>
-                <button>Cadastrar</button>
+                {!button ? <button>Cadastrar</button> : <button disabled={button}><ThreeDots color="#FFFFFF" width={60} height={60}/></button> }
             </form>
             <Link to="/">Já tem uma conta? Faça login!</Link>
         </WrapperForm>
