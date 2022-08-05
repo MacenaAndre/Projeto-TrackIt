@@ -4,13 +4,10 @@ import { ThreeDots } from "react-loader-spinner";
 import LoginContext from "./contexts/LoginContext";
 import axios from "axios";
 
-export default function CreateHabit() {
+export default function CreateHabit({ setToggle, habitName, setHabitName, selecteds, setSelecteds, refresh, setRefresh }) {
     const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-    const {login} = useContext(LoginContext)
-    const [selecteds, setSelecteds] = useState([]);
-    const [habitName, setHabitName] = useState("");
+    const {login} = useContext(LoginContext);
     const [buttonSave, setButtonSave] = useState(false);
-    console.log(selecteds);
 
     function selectDay( day ) {
 
@@ -40,8 +37,12 @@ export default function CreateHabit() {
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
 
         promise.then((response) => {
-            console.log(response.data)
             setButtonSave(false)
+            setHabitName("")
+            setSelecteds([])
+            setToggle(false)
+            setRefresh(!refresh)
+            //carregar pagina
         });
         promise.catch((response) => {
             setButtonSave(false)
@@ -74,7 +75,7 @@ export default function CreateHabit() {
                     ))}              
                 </div>
                 <Buttons>
-                    <h1>Cancelar</h1>
+                    <h1 onClick={() => setToggle(false)}>Cancelar</h1>
                     {!buttonSave ? <button>Salvar</button> : <button disabled={buttonSave}><ThreeDots color="#FFFFFF" width={40} height={40}/></button> }
                 </Buttons>
             </form>
@@ -159,5 +160,8 @@ const Buttons = styled.div`
         border: none;
         box-shadow: none;
         cursor: pointer;
+    }
+    button:disabled {
+        opacity: 0.7;
     }
 `
