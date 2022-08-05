@@ -1,12 +1,17 @@
-import styled from "styled-components"; //recebe o get dos hábitos e post dos hábitos
+import { useState } from "react";
+import styled from "styled-components"; //recebe o get dos hábitos
+import CreateHabit from "./CreateHabit";
 
 export default function Habits() {
+    let [toggle, setToggle] = useState(false);
+
     return (
         <>
             <Title>
                 <h1>Meus hábitos</h1>
-                <div>+</div>
+                <div onClick={() => setToggle(!toggle)}>+</div>
             </Title>
+            {toggle ? <CreateHabit /> : <></> }
             <Text>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Text>
         </>
     );
@@ -18,6 +23,7 @@ const Title = styled.div`
     align-items: center;
     width: 100%;
     height: auto;
+    margin-bottom: 28px;
 
     & h1 {
         font-size: 23px;
@@ -41,7 +47,6 @@ const Title = styled.div`
 const Text = styled.div`
         width: 100%;
         height: auto;
-        margin-top: 28px;
         font-size: 18px;
         font-weight: 400;
         line-height: 22px;
