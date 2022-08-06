@@ -10,12 +10,16 @@ import History from "./History";
 
 export default function App() {
     const [login, setLogin] = useState({});
+    let [refresh, setRefresh] = useState(true);
+    const [todayList, setTodayList] = useState([]);
+    let [numb, setNumb] = useState(0)
+    let [percentage, setPercentage] = useState(0);
 
     return (
         <>
             <GlobalStyle />
             <BrowserRouter>
-                <LoginContext.Provider value={{login, setLogin}}>
+                <LoginContext.Provider value={{login, setLogin, refresh, setRefresh, todayList, setTodayList, percentage, setPercentage, numb, setNumb}}>
                     <Routes>
                         <Route path="/" element={<Login/>}/>
                         <Route path="/cadastro" element={<Register />}/>

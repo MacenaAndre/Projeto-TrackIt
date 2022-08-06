@@ -4,9 +4,9 @@ import styled from "styled-components";
 import image from "../assets/images/trash.png"
 import LoginContext from "./contexts/LoginContext";
 
-export default function Habit({ habits, refresh, setRefresh }) {
+export default function Habit({ habits }) {
     const days2 = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-    const {login} = useContext(LoginContext);
+    const {login, refresh, setRefresh} = useContext(LoginContext);
 
     function deleteHabit(id) {
         let conf = window.confirm("Você tem certeza que deseja excluir este hábito");

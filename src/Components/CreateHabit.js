@@ -4,9 +4,9 @@ import { ThreeDots } from "react-loader-spinner";
 import LoginContext from "./contexts/LoginContext";
 import axios from "axios";
 
-export default function CreateHabit({ setToggle, habitName, setHabitName, selecteds, setSelecteds, refresh, setRefresh }) {
+export default function CreateHabit({ setToggle, habitName, setHabitName, selecteds, setSelecteds }) {
     const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-    const {login} = useContext(LoginContext);
+    const {login, refresh, setRefresh} = useContext(LoginContext);
     const [buttonSave, setButtonSave] = useState(false);
     const [disablediv, setDisablediv] = useState(true); //rever como fazer isso??????????
 

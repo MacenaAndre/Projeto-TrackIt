@@ -9,10 +9,10 @@ import Habit from "./Habit";
 export default function Habits() {
     const {login} = useContext(LoginContext);
     let [toggle, setToggle] = useState(false);
-    let [refresh, setRefresh] = useState(true);
+    const {refresh}= useContext(LoginContext);
     const [selecteds, setSelecteds] = useState([]); //talvez passar para os pais, caso alguma parte recarregue os hábitos
     const [habitName, setHabitName] = useState("");
-    const [listHabits, setListHabits] = useState(null);
+    const [listHabits, setListHabits] = useState([]);
     const navi = useNavigate();
 
     function navigate() {
@@ -50,16 +50,13 @@ export default function Habits() {
                             setHabitName={setHabitName}
                             selecteds={selecteds}
                             setSelecteds={setSelecteds}
-                            refresh={refresh}
-                            setRefresh={setRefresh}
             /> : <></> }
-            {!listHabits ? <Text>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Text> : 
+            {listHabits.length < 1 ? <Text>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Text> : 
             listHabits.map((value, index) => (
             <Habit 
                 key={index} 
                 habits={value}
-                refresh={refresh}
-                setRefresh={setRefresh}/>
+            />
             ))}
         </>
     );
