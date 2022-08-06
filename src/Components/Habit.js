@@ -54,7 +54,7 @@ const Wrapper = styled.div`
     border-radius: 5px;
     background-color: #FFFFFF;
     padding: 10px 18px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 
     & h1 {
         font-size: 20px;
