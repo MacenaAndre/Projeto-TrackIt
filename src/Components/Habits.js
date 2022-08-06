@@ -1,37 +1,48 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LoginContext from "./contexts/LoginContext";
 import CreateHabit from "./CreateHabit";
+import Habit from "./Habit";
 
 export default function Habits() {
     const {login} = useContext(LoginContext);
     let [toggle, setToggle] = useState(false);
     let [refresh, setRefresh] = useState(true);
-    const [selecteds, setSelecteds] = useState([]); //talvez passar para os pais
+    const [selecteds, setSelecteds] = useState([]); //talvez passar para os pais, caso alguma parte recarregue os hábitos
     const [habitName, setHabitName] = useState("");
-    const config = {
-        headers: {
-          Authorization: `Bearer ${login.token}`
-        }
-    } 
+    const [listHabits, setListHabits] = useState(null);
+    const navi = useNavigate();
+
+    function navigate() {
+        navi("/")
+    }    
+        
 
     useEffect(() => {
-        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
+        
+
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", {
+            headers: {
+              Authorization: `Bearer ${login.token}`
+            }
+        });
 
         promise.then((response) => {
-            console.log(response.data)
+            setListHabits(response.data.reverse());
         })
-        promise.catch((response) => {
-            alert(response.response.data.message)
+        promise.catch(() => {
+            navigate();
         })
-    }, []);
+        // eslint-disable-next-line
+    }, [refresh, login.token]);
     
     return (
         <>
             <Title>
                 <h1>Meus hábitos</h1>
-                <div onClick={() => setToggle(!toggle)}>+</div>
+                {toggle ? <div onClick={() => setToggle(!toggle)}>-</div> : <div onClick={() => setToggle(!toggle)}>+</div>}
             </Title>
             {toggle ? <CreateHabit 
                             setToggle={setToggle}
@@ -41,8 +52,15 @@ export default function Habits() {
                             setSelecteds={setSelecteds}
                             refresh={refresh}
                             setRefresh={setRefresh}
-                            /> : <></> }
-            <Text>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Text>
+            /> : <></> }
+            {!listHabits ? <Text>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Text> : 
+            listHabits.map((value, index) => (
+            <Habit 
+                key={index} 
+                habits={value}
+                refresh={refresh}
+                setRefresh={setRefresh}/>
+            ))}
         </>
     );
 }

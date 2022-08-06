@@ -54,7 +54,7 @@ const FooterBox = styled.div`
     div {
         height: 91px;
         width: 91px;
-        margin-bottom: 70px;
+        margin-bottom: 40px;
     }
     a {
         text-decoration: none;

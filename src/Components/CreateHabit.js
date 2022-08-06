@@ -8,6 +8,7 @@ export default function CreateHabit({ setToggle, habitName, setHabitName, select
     const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
     const {login} = useContext(LoginContext);
     const [buttonSave, setButtonSave] = useState(false);
+    const [disablediv, setDisablediv] = useState(true); //rever como fazer isso??????????
 
     function selectDay( day ) {
 
@@ -38,17 +39,20 @@ export default function CreateHabit({ setToggle, habitName, setHabitName, select
 
         promise.then((response) => {
             setButtonSave(false)
+            setDisablediv("")//rever div
             setHabitName("")
             setSelecteds([])
             setToggle(false)
             setRefresh(!refresh)
-            //carregar pagina
+            //div desabilitar
         });
         promise.catch((response) => {
             setButtonSave(false)
             alert(response.response.data.message)
         });
         setButtonSave(!buttonSave);
+        setDisablediv("disabled")//rever div
+
     }
     return (
         <FormHabit>
@@ -61,7 +65,7 @@ export default function CreateHabit({ setToggle, habitName, setHabitName, select
                     disabled={buttonSave}
                     required
                 ></input>
-                <div>
+                <div title={disablediv}>
                     {days.map((value, index) => (
                         !selecteds.includes(index) ? 
                             <UnClicked 
@@ -93,6 +97,7 @@ const FormHabit = styled.div`
 
     & div {
         display: flex;
+        pointer-events:${(props) => props.title ? 'none' : 'normal'};//rever div
     }
     input {
         height: 45px;
@@ -101,6 +106,9 @@ const FormHabit = styled.div`
         border: 1px solid #D4D4D4;
         margin-bottom: 8px;
         padding-left: 11px;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 25px;
     }
     input::placeholder {
         color: #DBDBDB;

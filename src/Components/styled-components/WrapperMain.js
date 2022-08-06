@@ -10,9 +10,10 @@ export default function WrapperMain({children}) {
 
 const Main = styled.div`
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     background-color: #f2f2f2;
-    padding: 92px 18px 0px 18px;
+    padding: 92px 18px 85px 18px;
     display: flex;
     flex-direction: column;
     font-family: 'Lexend Deca', sans-serif;
