@@ -8,7 +8,6 @@ export default function CreateHabit({ setToggle, habitName, setHabitName, select
     const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
     const {login, refresh, setRefresh} = useContext(LoginContext);
     const [buttonSave, setButtonSave] = useState(false);
-    const [disablediv, setDisablediv] = useState(true); //rever como fazer isso??????????
 
     function selectDay( day ) {
 
@@ -39,7 +38,6 @@ export default function CreateHabit({ setToggle, habitName, setHabitName, select
 
         promise.then((response) => {
             setButtonSave(false)
-            setDisablediv("")//rever div
             setHabitName("")
             setSelecteds([])
             setToggle(false)
@@ -51,7 +49,7 @@ export default function CreateHabit({ setToggle, habitName, setHabitName, select
             alert(response.response.data.message)
         });
         setButtonSave(!buttonSave);
-        setDisablediv("disabled")//rever div
+        
 
     }
     return (
@@ -65,15 +63,17 @@ export default function CreateHabit({ setToggle, habitName, setHabitName, select
                     disabled={buttonSave}
                     required
                 ></input>
-                <div title={disablediv}>
+                <div>
                     {days.map((value, index) => (
                         !selecteds.includes(index) ? 
                             <UnClicked 
-                                key={index} 
+                                key={index}
+                                disabled={buttonSave} 
                                 onClick={() => selectDay(index)}
                             >{value[0]}</UnClicked> : 
                             <Clicked 
-                                key={index} 
+                                key={index}
+                                disabled={buttonSave} 
                                 onClick={() => selectDay(index)}
                             >{value[0]}</Clicked> 
                     ))}              
@@ -97,7 +97,6 @@ const FormHabit = styled.div`
 
     & div {
         display: flex;
-        pointer-events:${(props) => props.title ? 'none' : 'normal'};//rever div
     }
     input {
         height: 45px;
@@ -130,14 +129,33 @@ const FormHabit = styled.div`
     }
     
 `
-const UnClicked = styled.span`
+const UnClicked = styled.button`
     border: 1px solid #D4D4D4;
     color: #D4D4D4;
+    background-color: #FFFFFF;
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    margin-right: 3px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25px;
+    text-align: center;
+    cursor: ${props => props.disabled ? "normal" : "pointer"};
 `
-const Clicked = styled.span`
+const Clicked = styled.button`
     border: 1px solid #CFCFCF;
     background-color: #CFCFCF;
     color: #FFFFFF;
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    margin-right: 3px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25px;
+    text-align: center;
+    cursor: ${props => props.disabled ? "normal" : "pointer"};
 `
 const Buttons = styled.div`
     display: flex;

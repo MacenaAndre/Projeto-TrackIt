@@ -10,7 +10,7 @@ export default function Habits() {
     const {login} = useContext(LoginContext);
     let [toggle, setToggle] = useState(false);
     const {refresh}= useContext(LoginContext);
-    const [selecteds, setSelecteds] = useState([]); //talvez passar para os pais, caso alguma parte recarregue os hábitos
+    const [selecteds, setSelecteds] = useState([]);
     const [habitName, setHabitName] = useState("");
     const [listHabits, setListHabits] = useState([]);
     const navi = useNavigate();

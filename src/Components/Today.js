@@ -10,11 +10,23 @@ import LoginContext from "./contexts/LoginContext";
 import TodayHabit from "./TodayHabit";
 
 export default function Today() {
-    const weekday = dayjs().locale("pt-br").format("dddd");//botar maiuscula, limitar apenas a uma palavra, data
+    let weekday = dayjs().locale("pt-br").format("dddd, DD/MM");//botar maiuscula, limitar apenas a uma palavra, data
     const {login, refresh } = useContext(LoginContext);
     const {todayList, setTodayList} = useContext(LoginContext);
     const {setNumb} = useContext(LoginContext);
     const {setPercentage} = useContext(LoginContext);
+
+    function Upper() {
+        let str = "";
+        for(let i = 0; i < weekday.length; i++) {
+            if(i === 0){
+                str += weekday[i].toUpperCase();
+            } else {
+                str += weekday[i];
+            }
+        }
+        return str;
+    }
 
     useEffect(() => {
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", {
@@ -24,7 +36,7 @@ export default function Today() {
         });
 
         promise.then((response) => {
-            setTodayList(response.data);
+            setTodayList(response.data.reverse());
             setNumb(response.data.filter((value) => value.done === true).length);
             setPercentage((response.data.filter((value) => value.done === true).length/response.data.length) * 100);
         })
@@ -36,10 +48,8 @@ export default function Today() {
     return (
         <WrapperMain>
             <Header></Header>
-            <Title>{weekday}, 17/05</Title>
-            {todayList.length < 1 ? <Text>Você não tem nenhum hábito para concluir hoje.</Text> : (
-                <TodayHabit></TodayHabit>
-            )}
+            <Title>{Upper()}</Title>
+            {todayList.length < 1 ? <Text>Você não tem nenhum hábito para concluir hoje.</Text> : <TodayHabit></TodayHabit>}
             <Footer></Footer>
         </WrapperMain>
     );

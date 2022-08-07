@@ -8,12 +8,10 @@ import axios from "axios";
 
 export default function TodayHabit() {
     const {todayList} = useContext(LoginContext);
-    const {percentage, setPercentage} = useContext(LoginContext);
-    const {numb, setNumb} = useContext(LoginContext);
+    const {percentage} = useContext(LoginContext);
+    const {numb} = useContext(LoginContext);
     const {refresh, setRefresh} = useContext(LoginContext);
     const {login} = useContext(LoginContext);
-
-    console.log(numb, percentage, todayList);
 
     function checkHabit(id) {
         const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, {}, {
@@ -31,7 +29,18 @@ export default function TodayHabit() {
 
     }
     function unCheckHabit(id) {
-
+        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, {}, {
+            headers: {
+                Authorization: `Bearer ${login.token}`
+              }
+        });
+        
+        promise.then(() => {
+            setRefresh(!refresh);
+        })
+        promise.catch((response) => {
+            alert(response.response.data.message);
+        })
     }
     
 
@@ -46,7 +55,7 @@ export default function TodayHabit() {
                         <Text>
                             <h1>{value.name}</h1>
                             <h2>Sequência atual: <Done>{value.currentSequence} dias</Done></h2>
-                            <h2>Seu Recorde: {value.highestSequence === value.currentSequence ?
+                            <h2>Seu Recorde: {value.highestSequence <= value.currentSequence ?
                                                  <Done>{value.highestSequence} dias</Done> : 
                                                  <span>{value.highestSequence} dias</span>}
                             </h2>

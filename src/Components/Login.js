@@ -26,7 +26,7 @@ export default function Login() {
 
         promise.then((response) => {
             setLogin(response.data)
-            navigate("/habitos")
+            navigate("/hoje")
         });
         promise.catch((response) => {
             setButtonLogin(false)
