@@ -13,7 +13,7 @@ const Main = styled.div`
     height: 100%;
     min-height: 100vh;
     background-color: #f2f2f2;
-    padding: 92px 18px 85px 18px;
+    padding: 100px 18px 100px 18px;
     display: flex;
     flex-direction: column;
     font-family: 'Lexend Deca', sans-serif;

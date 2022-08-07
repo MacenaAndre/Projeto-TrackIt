@@ -36,14 +36,14 @@ export default function Today() {
         });
 
         promise.then((response) => {
-            setTodayList(response.data.reverse());
+            setTodayList(response.data);
             setNumb(response.data.filter((value) => value.done === true).length);
-            setPercentage((response.data.filter((value) => value.done === true).length/response.data.length) * 100);
+            setPercentage(Math.round((response.data.filter((value) => value.done === true).length/response.data.length) * 100));
         })
         promise.catch((response) => {
             alert(response.response.data.message);
         })
-    }, [refresh, login.token])
+    }, [refresh, login.token, setNumb, setPercentage, setTodayList])
     
     return (
         <WrapperMain>
@@ -59,6 +59,7 @@ const Title = styled.h1`
     font-weight: 400;
     line-height: 29px;
     color: #126BA5;
+    margin-top: 5px;
 `
 const Text = styled.div`
         width: 100%;
@@ -67,6 +68,6 @@ const Text = styled.div`
         font-weight: 400;
         line-height: 22px;
         color: #666666;
-        margin-top: 18px;
+        margin-top: 29px;
 `
 

@@ -42,7 +42,6 @@ export default function CreateHabit({ setToggle, habitName, setHabitName, select
             setSelecteds([])
             setToggle(false)
             setRefresh(!refresh)
-            //div desabilitar
         });
         promise.catch((response) => {
             setButtonSave(false)
@@ -114,6 +113,11 @@ const FormHabit = styled.div`
         font-size: 20px;
         font-weight: 400;
         line-height: 25px;
+    }
+    input:disabled {
+        background-color: #F2F2F2;
+        color: #B3B3B3;
+        border: 1px solid #D4D4D4;
     }
     span {
         display: block;

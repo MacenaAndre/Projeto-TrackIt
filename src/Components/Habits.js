@@ -12,7 +12,7 @@ export default function Habits() {
     const {refresh}= useContext(LoginContext);
     const [selecteds, setSelecteds] = useState([]);
     const [habitName, setHabitName] = useState("");
-    const [listHabits, setListHabits] = useState([]);
+    const [listHabits, setListHabits] = useState([]);// passar para o pai depois
     const navi = useNavigate();
 
     function navigate() {
@@ -35,7 +35,6 @@ export default function Habits() {
         promise.catch(() => {
             navigate();
         })
-        // eslint-disable-next-line
     }, [refresh, login.token]);
     
     return (

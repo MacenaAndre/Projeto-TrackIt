@@ -26,6 +26,7 @@ export default function Footer() {
                             textColor: '#FFFFFF',
                             trailColor: '#52B6FF',
                             backgroundColor: '#52B6FF',
+                            pathTransitionDuration: 1.5
                         })}
                     />
                 </div>
