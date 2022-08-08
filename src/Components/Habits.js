@@ -1,41 +1,54 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LoginContext from "./contexts/LoginContext";
 import CreateHabit from "./CreateHabit";
 import Habit from "./Habit";
 
 export default function Habits() {
-    const {login} = useContext(LoginContext);
+    //const {login} = useContext(LoginContext);
     let [toggle, setToggle] = useState(false);
-    const {refresh}= useContext(LoginContext);
+    const {refresh, setTodayList, setNumb, setPercentage, setListHabits, listHabits}= useContext(LoginContext);
     const [selecteds, setSelecteds] = useState([]);
     const [habitName, setHabitName] = useState("");
-    const [listHabits, setListHabits] = useState([]);// passar para o pai depois
-    const navi = useNavigate();
-
-    function navigate() {
-        navi("/")
-    }    
+    const config = JSON.parse(localStorage.getItem("trackit"));
         
+    useEffect(() => {
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", {
+            headers: {
+              Authorization: `Bearer ${config.token}`
+            }
+        });
+
+        promise.then((response) => {
+            setTodayList(response.data);
+            setNumb(response.data.filter((value) => value.done === true).length);
+            if(response.data.filter((value) => value.done === true).length < 1)  {
+                setPercentage(0)
+            } else {
+                setPercentage(Math.round((response.data.filter((value) => value.done === true).length/response.data.length) * 100));
+            }
+        })
+        promise.catch((response) => {
+            alert(response.response.data.message);
+        })
+    }, [refresh, config.token, setNumb, setPercentage, setTodayList])
 
     useEffect(() => {
-        
-
+    
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", {
             headers: {
-              Authorization: `Bearer ${login.token}`
+              Authorization: `Bearer ${config.token}`
             }
         });
 
         promise.then((response) => {
             setListHabits(response.data.reverse());
         })
-        promise.catch(() => {
-            navigate();
+        promise.catch((response) => {
+            alert(response.response.data.message);
         })
-    }, [refresh, login.token]);
+    }, [refresh, config.token, setListHabits]);
     
     return (
         <>

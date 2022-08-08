@@ -6,7 +6,8 @@ import axios from "axios";
 
 export default function CreateHabit({ setToggle, habitName, setHabitName, selecteds, setSelecteds }) {
     const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-    const {login, refresh, setRefresh} = useContext(LoginContext);
+    const config = JSON.parse(localStorage.getItem("trackit"));
+    const { refresh, setRefresh} = useContext(LoginContext);//login?
     const [buttonSave, setButtonSave] = useState(false);
 
     function selectDay( day ) {
@@ -29,12 +30,12 @@ export default function CreateHabit({ setToggle, habitName, setHabitName, select
             name: habitName,
             days: selecteds
         }
-        const config = {
+        const auth = {
             headers: {
-              Authorization: `Bearer ${login.token}`
+              Authorization: `Bearer ${config.token}`
             }
         } 
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, auth);
 
         promise.then((response) => {
             setButtonSave(false)

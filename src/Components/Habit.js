@@ -6,14 +6,15 @@ import LoginContext from "./contexts/LoginContext";
 
 export default function Habit({ habits }) {
     const days2 = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-    const {login, refresh, setRefresh} = useContext(LoginContext);
+    const config = JSON.parse(localStorage.getItem("trackit"));
+    const { refresh, setRefresh} = useContext(LoginContext);//login?
 
     function deleteHabit(id) {
         let conf = window.confirm("Você tem certeza que deseja excluir este hábito");
         if(conf) {
             const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, {
                 headers: {
-                  Authorization: `Bearer ${login.token}`
+                  Authorization: `Bearer ${config.token}`
                 }
             });
 

@@ -10,9 +10,10 @@ import LoginContext from "./contexts/LoginContext";
 import TodayHabit from "./TodayHabit";
 
 export default function Today() {
-    let weekday = dayjs().locale("pt-br").format("dddd, DD/MM");//botar maiuscula, limitar apenas a uma palavra, data
-    const {login, refresh } = useContext(LoginContext);
-    const {todayList, setTodayList} = useContext(LoginContext);
+    let weekday = dayjs().locale("pt-br").format("dddd, DD/MM");//limitar apenas a uma palavra, data
+    const config = JSON.parse(localStorage.getItem("trackit"));
+    const { refresh } = useContext(LoginContext);// login?
+    const {todayList, setTodayList } = useContext(LoginContext);
     const {setNumb} = useContext(LoginContext);
     const {setPercentage} = useContext(LoginContext);
 
@@ -31,19 +32,23 @@ export default function Today() {
     useEffect(() => {
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", {
             headers: {
-              Authorization: `Bearer ${login.token}`
+              Authorization: `Bearer ${config.token}`
             }
         });
 
         promise.then((response) => {
             setTodayList(response.data);
             setNumb(response.data.filter((value) => value.done === true).length);
-            setPercentage(Math.round((response.data.filter((value) => value.done === true).length/response.data.length) * 100));
+            if(response.data.filter((value) => value.done === true).length < 1)  {
+                setPercentage(0)
+            } else {
+                setPercentage(Math.round((response.data.filter((value) => value.done === true).length/response.data.length) * 100));
+            }
         })
         promise.catch((response) => {
             alert(response.response.data.message);
         })
-    }, [refresh, login.token, setNumb, setPercentage, setTodayList])
+    }, [refresh, config.token, setNumb, setPercentage, setTodayList])
     
     return (
         <WrapperMain>

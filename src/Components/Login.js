@@ -25,8 +25,14 @@ export default function Login() {
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", objPost);
 
         promise.then((response) => {
+            localStorage.setItem("trackit", JSON.stringify({
+                token: response.data.token,
+                time: +new Date(),
+                image: response.data.image
+            }))
             setLogin(response.data)
             navigate("/hoje")
+            
         });
         promise.catch((response) => {
             setButtonLogin(false)

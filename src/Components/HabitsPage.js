@@ -4,7 +4,6 @@ import Header from "./Header";
 import { WrapperMain } from "./styled-components";
 
 export default function HabitsPage() {
-
     return (
         <WrapperMain>
             <Header></Header>

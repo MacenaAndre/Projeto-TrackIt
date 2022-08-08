@@ -1,14 +1,15 @@
 import styled from "styled-components";
-import { useContext } from "react";
-import LoginContext from "./contexts/LoginContext";
+//import { useContext } from "react";
+//import LoginContext from "./contexts/LoginContext";
 
 export default function Header() {
-    const {login} = useContext(LoginContext);
+    //const {login} = useContext(LoginContext);
+    const config = JSON.parse(localStorage.getItem("trackit"));
 
     return (
         <HeaderBox>
             <h1>Trackit</h1>
-            <img src={login.image} alt="userimage"></img>
+            <img src={config.image} alt="userimage"></img>
         </HeaderBox>
     );
 }

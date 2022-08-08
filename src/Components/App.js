@@ -12,6 +12,7 @@ export default function App() {
     const [login, setLogin] = useState({});
     let [refresh, setRefresh] = useState(true);
     const [todayList, setTodayList] = useState([]);
+    const [listHabits, setListHabits] = useState([]);
     let [numb, setNumb] = useState(0)
     let [percentage, setPercentage] = useState(0);
 
@@ -19,7 +20,7 @@ export default function App() {
         <>
             <GlobalStyle />
             <BrowserRouter>
-                <LoginContext.Provider value={{login, setLogin, refresh, setRefresh, todayList, setTodayList, percentage, setPercentage, numb, setNumb}}>
+                <LoginContext.Provider value={{login, setLogin, refresh, setRefresh, todayList, setTodayList, percentage, setPercentage, numb, setNumb, listHabits, setListHabits}}>
                     <Routes>
                         <Route path="/" element={<Login/>}/>
                         <Route path="/cadastro" element={<Register />}/>

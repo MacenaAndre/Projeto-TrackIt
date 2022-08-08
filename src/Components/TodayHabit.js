@@ -7,16 +7,17 @@ import axios from "axios";
 
 
 export default function TodayHabit() {
+    const config = JSON.parse(localStorage.getItem("trackit"));
     const {todayList} = useContext(LoginContext);
     const {percentage} = useContext(LoginContext);
     const {numb} = useContext(LoginContext);
     const {refresh, setRefresh} = useContext(LoginContext);
-    const {login} = useContext(LoginContext);
+    //const {login} = useContext(LoginContext);
 
     function checkHabit(id) {
         const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, {}, {
             headers: {
-                Authorization: `Bearer ${login.token}`
+                Authorization: `Bearer ${config.token}`
               }
         });
 
@@ -31,7 +32,7 @@ export default function TodayHabit() {
     function unCheckHabit(id) {
         const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, {}, {
             headers: {
-                Authorization: `Bearer ${login.token}`
+                Authorization: `Bearer ${config.token}`
               }
         });
         
