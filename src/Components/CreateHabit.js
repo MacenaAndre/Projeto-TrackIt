@@ -7,7 +7,7 @@ import axios from "axios";
 export default function CreateHabit({ setToggle, habitName, setHabitName, selecteds, setSelecteds }) {
     const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
     const config = JSON.parse(localStorage.getItem("trackit"));
-    const { refresh, setRefresh} = useContext(LoginContext);//login?
+    const { refresh, setRefresh} = useContext(LoginContext);
     const [buttonSave, setButtonSave] = useState(false);
 
     function selectDay( day ) {

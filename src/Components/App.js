@@ -7,6 +7,7 @@ import HabitsPage from "./HabitsPage";
 import { GlobalStyle } from "./styled-components";
 import Today from "./Today";
 import History from "./History";
+import PrivatePage from "./PrivatePage";
 
 export default function App() {
     const [login, setLogin] = useState({});
@@ -20,13 +21,26 @@ export default function App() {
         <>
             <GlobalStyle />
             <BrowserRouter>
-                <LoginContext.Provider value={{login, setLogin, refresh, setRefresh, todayList, setTodayList, percentage, setPercentage, numb, setNumb, listHabits, setListHabits}}>
+                <LoginContext.Provider value={{login, setLogin, refresh, setRefresh, todayList, setTodayList, percentage,
+                                             setPercentage, numb, setNumb, listHabits, setListHabits}}>
                     <Routes>
                         <Route path="/" element={<Login/>}/>
                         <Route path="/cadastro" element={<Register />}/>
-                        <Route path="/habitos" element={<HabitsPage />}/>
-                        <Route path="/hoje" element={<Today />}/>
-                        <Route path="/historico" element={<History />}/>
+                        <Route path="/habitos" element={
+                            <PrivatePage>
+                                <HabitsPage />
+                            </PrivatePage>
+                        }/>
+                        <Route path="/hoje" element={
+                            <PrivatePage>
+                                <Today />
+                            </PrivatePage>
+                        }/>
+                        <Route path="/historico" element={
+                            <PrivatePage>
+                                <History />
+                            </PrivatePage>
+                        }/>
                     </Routes>
                 </LoginContext.Provider>
             </BrowserRouter>

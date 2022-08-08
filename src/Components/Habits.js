@@ -6,33 +6,11 @@ import CreateHabit from "./CreateHabit";
 import Habit from "./Habit";
 
 export default function Habits() {
-    //const {login} = useContext(LoginContext);
     let [toggle, setToggle] = useState(false);
-    const {refresh, setTodayList, setNumb, setPercentage, setListHabits, listHabits}= useContext(LoginContext);
+    const {refresh, setListHabits, listHabits}= useContext(LoginContext);
     const [selecteds, setSelecteds] = useState([]);
     const [habitName, setHabitName] = useState("");
     const config = JSON.parse(localStorage.getItem("trackit"));
-        
-    useEffect(() => {
-        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", {
-            headers: {
-              Authorization: `Bearer ${config.token}`
-            }
-        });
-
-        promise.then((response) => {
-            setTodayList(response.data);
-            setNumb(response.data.filter((value) => value.done === true).length);
-            if(response.data.filter((value) => value.done === true).length < 1)  {
-                setPercentage(0)
-            } else {
-                setPercentage(Math.round((response.data.filter((value) => value.done === true).length/response.data.length) * 100));
-            }
-        })
-        promise.catch((response) => {
-            alert(response.response.data.message);
-        })
-    }, [refresh, config.token, setNumb, setPercentage, setTodayList])
 
     useEffect(() => {
     

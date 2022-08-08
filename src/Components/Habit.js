@@ -7,7 +7,7 @@ import LoginContext from "./contexts/LoginContext";
 export default function Habit({ habits }) {
     const days2 = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
     const config = JSON.parse(localStorage.getItem("trackit"));
-    const { refresh, setRefresh} = useContext(LoginContext);//login?
+    const { refresh, setRefresh} = useContext(LoginContext);
 
     function deleteHabit(id) {
         let conf = window.confirm("Você tem certeza que deseja excluir este hábito");

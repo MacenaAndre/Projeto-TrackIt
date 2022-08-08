@@ -1,9 +1,6 @@
 import styled from "styled-components";
-//import { useContext } from "react";
-//import LoginContext from "./contexts/LoginContext";
 
 export default function Header() {
-    //const {login} = useContext(LoginContext);
     const config = JSON.parse(localStorage.getItem("trackit"));
 
     return (

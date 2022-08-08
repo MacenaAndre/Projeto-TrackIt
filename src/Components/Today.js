@@ -10,12 +10,11 @@ import LoginContext from "./contexts/LoginContext";
 import TodayHabit from "./TodayHabit";
 
 export default function Today() {
-    let weekday = dayjs().locale("pt-br").format("dddd, DD/MM");//limitar apenas a uma palavra, data
+    let weekday = dayjs().locale("pt-br").format("dddd");
+    let date = dayjs().locale("pt-br").format("DD/MM");
     const config = JSON.parse(localStorage.getItem("trackit"));
-    const { refresh } = useContext(LoginContext);// login?
-    const {todayList, setTodayList } = useContext(LoginContext);
-    const {setNumb} = useContext(LoginContext);
-    const {setPercentage} = useContext(LoginContext);
+    const {todayList, setTodayList, refresh, setNumb, setPercentage} = useContext(LoginContext);
+    
 
     function Upper() {
         let str = "";
@@ -23,6 +22,9 @@ export default function Today() {
             if(i === 0){
                 str += weekday[i].toUpperCase();
             } else {
+                if(weekday[i] === "-") {
+                    return str;
+                }
                 str += weekday[i];
             }
         }
@@ -37,7 +39,7 @@ export default function Today() {
         });
 
         promise.then((response) => {
-            setTodayList(response.data);
+            setTodayList(response.data.reverse());
             setNumb(response.data.filter((value) => value.done === true).length);
             if(response.data.filter((value) => value.done === true).length < 1)  {
                 setPercentage(0)
@@ -53,7 +55,7 @@ export default function Today() {
     return (
         <WrapperMain>
             <Header></Header>
-            <Title>{Upper()}</Title>
+            <Title>{Upper()}, {date}</Title>
             {todayList.length < 1 ? <Text>Você não tem nenhum hábito para concluir hoje.</Text> : <TodayHabit></TodayHabit>}
             <Footer></Footer>
         </WrapperMain>

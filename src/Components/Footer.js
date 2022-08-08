@@ -2,11 +2,34 @@ import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import LoginContext from "./contexts/LoginContext";
+import axios from "axios";
 
 export default function Footer() {
-    const {percentage} = useContext(LoginContext);
+    const config = JSON.parse(localStorage.getItem("trackit"));
+    const {percentage, refresh, setTodayList, setNumb, setPercentage} = useContext(LoginContext);
+
+    useEffect(() => {
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", {
+            headers: {
+              Authorization: `Bearer ${config.token}`
+            }
+        });
+
+        promise.then((response) => {
+            setTodayList(response.data.reverse());
+            setNumb(response.data.filter((value) => value.done === true).length);
+            if(response.data.filter((value) => value.done === true).length < 1)  {
+                setPercentage(0)
+            } else {
+                setPercentage(Math.round((response.data.filter((value) => value.done === true).length/response.data.length) * 100));
+            }
+        })
+        promise.catch((response) => {
+            alert(response.response.data.message);
+        })
+    }, [refresh, config.token, setNumb, setPercentage, setTodayList])
 
     return (
         <FooterBox>
@@ -49,6 +72,7 @@ const FooterBox = styled.div`
     align-items: center;
     background-color: #FFFFFF;
     padding: 0px 18px;
+    z-index: 1;
 
     & h3 {
         font-size: 18px;
